@@ -4,6 +4,7 @@ const express = require("express");
 const signup = require("./routes/signup");
 const login = require("./routes/login");
 const auth = require("./middleware/auth");
+const blogs = require("./routes/blog");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -22,6 +23,7 @@ mongoose
 
 app.use("/api", signup);
 app.use("/api", login);
+app.use("/api", blogs);
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${PORT}`);

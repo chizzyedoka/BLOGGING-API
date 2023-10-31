@@ -8,6 +8,9 @@ const blogSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  author: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -15,7 +18,14 @@ const blogSchema = new mongoose.Schema({
   state: {
     type: String,
     enum: ["draft", "published"],
+    default: "draft",
+  },
+  email: {
+    type: String,
+    unique: true,
     required: true,
+    minlength: 5,
+    maxlength: 255,
   },
 });
 
