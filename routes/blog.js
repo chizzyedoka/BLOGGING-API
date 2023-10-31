@@ -4,13 +4,20 @@ const auth = require("../middleware/auth");
 const {
   createBlog,
   getAllPublishedBlogs,
-  getPublishedBlog,
+  getOnePublishedBlog,
+  updateOneBlog,
 } = require("../middleware/blogs");
 
+// GET all published blogs
 router.get("/blogs", getAllPublishedBlogs);
 
-router.get("/blogs/:blogname", getPublishedBlog);
+// GET a single published blog based on name
+router.get("/blogs/:blogname", getOnePublishedBlog);
 
+// CREATE new blog
 router.post("/blogs", auth, createBlog);
+
+// update a blog
+router.put("/blogs/:blogname", auth, updateOneBlog);
 
 module.exports = router;

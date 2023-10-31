@@ -19,8 +19,11 @@ const getAllPublishedBlogs = async (req, res) => {
   return res.status(200).send(blogList);
 };
 
-const getPublishedBlog = async (req, res) => {
-  const found = await Blog.findOne({ title: req.params.blogname });
+const getOnePublishedBlog = async (req, res) => {
+  const found = await Blog.findOne({
+    title: req.params.blogname,
+    state: "published",
+  });
   if (found) {
     return res.status(200).send(found);
   }
@@ -29,4 +32,42 @@ const getPublishedBlog = async (req, res) => {
   });
 };
 
-module.exports = { createBlog, getAllPublishedBlogs, getPublishedBlog };
+const updateOneBlog = async (req, res) => {
+  let blog = await Blog.findOne({
+    title: req.params.blogname,
+    state: "draft",
+    email: req.user.email,
+  });
+  console.log(blog);
+  if (!blog) {
+    return res.status(404).json({
+      message: "Blog doesn't exist or no longer in draft state",
+    });
+  }
+
+  const { title, description, bodyContent, tags } = req.body;
+  if (title) {
+    blog.title = title;
+  }
+  if (description) {
+    blog.description = description;
+  }
+  if (bodyContent) {
+    blog.bodyContent = bodyContent;
+  }
+  if (tags) {
+    blog.tags = tags;
+  }
+  const updatedBlog = await blog.save();
+  res.status(200).json({
+    message: "Blog updated successfully",
+    updatedBlog,
+  });
+};
+
+module.exports = {
+  createBlog,
+  getAllPublishedBlogs,
+  getOnePublishedBlog,
+  updateOneBlog,
+};
