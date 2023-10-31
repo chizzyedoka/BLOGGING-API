@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const signup = require("./routes/signup");
 const login = require("./routes/login");
+const auth = require("./middleware/auth");
 
 const app = express();
 const PORT = process.env.PORT;
