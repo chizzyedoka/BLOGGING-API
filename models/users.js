@@ -50,4 +50,4 @@ const complexityOptions = {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports.User = User;
+module.exports = { User, complexityOptions };
