@@ -10,12 +10,12 @@ const blogs = require("./routes/blog");
 
 const app = express();
 const PORT = process.env.PORT;
-
+const uri = process.env.MONGODB_URI;
 app.use(express.json());
 
 // connect to database
 mongoose
-  .connect("mongodb://0.0.0.0:27017/blog-api-node", {
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useUnifiedTopology: true,
