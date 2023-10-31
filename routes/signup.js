@@ -1,5 +1,6 @@
 const { User } = require("../models/users");
 const { validateUser } = require("../middleware/validate");
+const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 
@@ -17,6 +18,12 @@ router.post("/signup", async (req, res) => {
 
   // create new user in the database
   user = new User({ firstname, lastname, email, password });
+
+  // encrypt password
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+
+  // save user in database
   await user.save();
   res.send(user);
 });
