@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { createBlog } = require("../middleware/blogs");
+const {
+  createBlog,
+  getAllPublishedBlogs,
+  getPublishedBlog,
+} = require("../middleware/blogs");
 
-router.get("/blogs", (req, res) => {
-  res.status(200).send(Blog.find({ state: "published" }));
-});
+router.get("/blogs", getAllPublishedBlogs);
+
+router.get("/blogs/:blogname", getPublishedBlog);
 
 router.post("/blogs", auth, createBlog);
 

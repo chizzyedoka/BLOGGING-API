@@ -12,8 +12,21 @@ const createBlog = async (req, res) => {
 };
 
 const getAllPublishedBlogs = async (req, res) => {
-  // if logged in return ur published blogs
-  //else return all published blogs in database
+  const blogList = await Blog.find({ state: "published" });
+  if (blogList.length === 0) {
+    return res.status(200).send("No blogs");
+  }
+  return res.status(200).send(blogList);
 };
 
-module.exports = { createBlog, getAllPublishedBlogs };
+const getPublishedBlog = async (req, res) => {
+  const found = await Blog.findOne({ title: req.params.blogname });
+  if (found) {
+    return res.status(200).send(found);
+  }
+  res.status(404).json({
+    message: "Blog doesn't exist",
+  });
+};
+
+module.exports = { createBlog, getAllPublishedBlogs, getPublishedBlog };
