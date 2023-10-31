@@ -32,6 +32,18 @@ const getOnePublishedBlog = async (req, res) => {
   });
 };
 
+const getAllBlogs = async (req, res) => {
+  const blogs = await Blog.find({
+    author: req.params.author,
+  });
+  if (blogs.length === 0) {
+    return res.status(404).json({
+      message: "Author has no blogs yet!",
+    });
+  }
+  res.status(200).send(blogs);
+};
+
 const updateOneBlog = async (req, res) => {
   let blog = await Blog.findOne({
     title: req.params.blogname,
@@ -70,4 +82,5 @@ module.exports = {
   getAllPublishedBlogs,
   getOnePublishedBlog,
   updateOneBlog,
+  getAllBlogs,
 };

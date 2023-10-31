@@ -27,6 +27,26 @@ const blogSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 255,
   },
+  readCount: {
+    type: Number,
+    default: 0,
+  },
+  readingTime: {
+    type: Number,
+  },
+  bodyContent: {
+    type: String,
+    required: [true, "a blog must have content"],
+  },
+  ratingAvg: {
+    type: Number,
+    default: 3.5,
+    set: (val) => Math.round(val * 10) / 10,
+  },
+  numOfRating: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Blog", blogSchema);
