@@ -25,7 +25,9 @@ router.post("/signup", async (req, res) => {
 
   // save user in database
   await user.save();
-  res.send(user);
+  res.json({
+    message: `signed in as ${user.email}`,
+  });
 });
 
 module.exports = router;

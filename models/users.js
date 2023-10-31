@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
   firstname: {
@@ -39,14 +39,14 @@ const complexityOptions = {
 };
 
 // create method for user object
-// userSchema.methods.generateAuthToken = function () {
-//   const token = jwt.sign(
-//     { name: this.username },
-//     process.env.ACCESS_TOKEN_SECRET,
-//     { expiresIn: "2h" }
-//   );
-//   return token;
-// };
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { email: this.email },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "1h" }
+  );
+  return token;
+};
 
 const User = mongoose.model("User", userSchema);
 
